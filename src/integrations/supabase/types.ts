@@ -118,6 +118,47 @@ export type Database = {
           },
         ]
       }
+      menu_groups: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          display_order: number | null
+          id: string
+          is_active: boolean | null
+          name: string
+          restaurant_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          restaurant_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          restaurant_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "menu_groups_restaurant_id_fkey"
+            columns: ["restaurant_id"]
+            isOneToOne: false
+            referencedRelation: "restaurants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       menu_item_accompaniments: {
         Row: {
           accompaniment_id: string
@@ -210,6 +251,7 @@ export type Database = {
           deleted_at: string | null
           description: string | null
           display_order: number | null
+          group_id: string | null
           id: string
           image_url: string | null
           is_accompaniment: boolean
@@ -227,6 +269,7 @@ export type Database = {
           deleted_at?: string | null
           description?: string | null
           display_order?: number | null
+          group_id?: string | null
           id?: string
           image_url?: string | null
           is_accompaniment?: boolean
@@ -244,6 +287,7 @@ export type Database = {
           deleted_at?: string | null
           description?: string | null
           display_order?: number | null
+          group_id?: string | null
           id?: string
           image_url?: string | null
           is_accompaniment?: boolean
@@ -259,6 +303,13 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "menu_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "menu_items_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "menu_groups"
             referencedColumns: ["id"]
           },
           {
@@ -468,8 +519,10 @@ export type Database = {
           brand_secondary_color: string | null
           created_at: string | null
           currency: string | null
+          display_order: number | null
           email: string
           id: string
+          is_active: boolean | null
           logo_url: string | null
           menu_background_color: string | null
           menu_background_image: string | null
@@ -480,12 +533,14 @@ export type Database = {
           password_hash: string
           phone: string | null
           plan: string | null
+          slug: string | null
           subscription_end_date: string | null
           subscription_start_date: string | null
           subscription_status:
             | Database["public"]["Enums"]["subscription_status"]
             | null
           updated_at: string | null
+          user_id: string | null
           whatsapp_number: string
         }
         Insert: {
@@ -494,8 +549,10 @@ export type Database = {
           brand_secondary_color?: string | null
           created_at?: string | null
           currency?: string | null
+          display_order?: number | null
           email: string
           id?: string
+          is_active?: boolean | null
           logo_url?: string | null
           menu_background_color?: string | null
           menu_background_image?: string | null
@@ -506,12 +563,14 @@ export type Database = {
           password_hash: string
           phone?: string | null
           plan?: string | null
+          slug?: string | null
           subscription_end_date?: string | null
           subscription_start_date?: string | null
           subscription_status?:
             | Database["public"]["Enums"]["subscription_status"]
             | null
           updated_at?: string | null
+          user_id?: string | null
           whatsapp_number: string
         }
         Update: {
@@ -520,8 +579,10 @@ export type Database = {
           brand_secondary_color?: string | null
           created_at?: string | null
           currency?: string | null
+          display_order?: number | null
           email?: string
           id?: string
+          is_active?: boolean | null
           logo_url?: string | null
           menu_background_color?: string | null
           menu_background_image?: string | null
@@ -532,12 +593,14 @@ export type Database = {
           password_hash?: string
           phone?: string | null
           plan?: string | null
+          slug?: string | null
           subscription_end_date?: string | null
           subscription_start_date?: string | null
           subscription_status?:
             | Database["public"]["Enums"]["subscription_status"]
             | null
           updated_at?: string | null
+          user_id?: string | null
           whatsapp_number?: string
         }
         Relationships: [

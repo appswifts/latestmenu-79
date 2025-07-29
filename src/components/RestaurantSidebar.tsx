@@ -26,8 +26,8 @@ import {
 
 const restaurantMenuItems = [
   { title: "Dashboard", url: "/dashboard", icon: Home },
-  { title: "Restaurant", url: "/restaurants", icon: Store },
-  { title: "Menu", url: "/menu", icon: Store },
+  { title: "Restaurants", url: "/restaurants", icon: Store },
+  { title: "Menu", url: "/menu-new", icon: Store },
   { title: "Tables & QR Codes", url: "/tables", icon: QrCode },
   { title: "Subscription", url: "/subscription", icon: CreditCard },
   { title: "Settings", url: "/settings", icon: Settings },

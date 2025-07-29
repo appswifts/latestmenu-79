@@ -30,7 +30,10 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminSetup from "./pages/AdminSetup";
 import RestaurantSetup from "./pages/RestaurantSetup";
-import Subscription from "./pages/Subscription";
+import RestaurantsManagement from "./pages/RestaurantsManagement";
+import MenuManagementNew from "./pages/MenuManagementNew";
+import SubscriptionManagement from "./pages/SubscriptionManagement";
+import AdminSubscriptionApproval from "./pages/admin/AdminSubscriptionApproval";
 
 import HowItWorks from "./pages/HowItWorks";
 import Contact from "./pages/Contact";
@@ -58,7 +61,7 @@ const App = () => (
           <Route path="/terms" element={<Terms />} />
           
           {/* Dynamic menu route (public) */}
-          <Route path="/:restaurantName/:tableName" element={<DynamicRestaurantMenu />} />
+          <Route path="/:restaurantSlug/:tableName" element={<DynamicRestaurantMenu />} />
 
           {/* Authentication routes */}
           <Route path="/signin" element={<RestaurantLogin />} />
@@ -104,12 +107,17 @@ const App = () => (
           } />
           <Route path="/restaurants" element={
             <ProtectedRoute>
-              <RestaurantSetup />
+              <RestaurantsManagement />
+            </ProtectedRoute>
+          } />
+          <Route path="/menu-new" element={
+            <ProtectedRoute>
+              <MenuManagementNew />
             </ProtectedRoute>
           } />
           <Route path="/subscription" element={
             <ProtectedRoute>
-              <Subscription />
+              <SubscriptionManagement />
             </ProtectedRoute>
           } />
           <Route path="/order/:restaurantId/:tableName" element={<DynamicRestaurantMenu />} />
@@ -148,6 +156,11 @@ const App = () => (
           <Route path="/admin/packages" element={
             <ProtectedRoute adminOnly={true}>
               <AdminPackages />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/subscription-approval" element={
+            <ProtectedRoute adminOnly={true}>
+              <AdminSubscriptionApproval />
             </ProtectedRoute>
           } />
           

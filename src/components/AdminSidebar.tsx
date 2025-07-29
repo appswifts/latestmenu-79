@@ -30,6 +30,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const adminMenuItems = [
   { title: "Dashboard", url: "/admin/dashboard", icon: Home },
+  { title: "Approve Subscriptions", url: "/admin/subscription-approval", icon: CreditCard },
   { title: "Subscription Orders", url: "/admin/subscription-orders", icon: Receipt },
   { title: "Restaurants", url: "/admin/restaurants", icon: Store },
   { title: "Payment Methods", url: "/admin/payment-methods", icon: CreditCard },
