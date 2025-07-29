@@ -1,0 +1,130 @@
+// Simplified Restaurant QR Code System Database Schema
+// No menu management - restaurants handle menus via WhatsApp
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Restaurants table
+model Restaurant {
+  id                   String   @id @default(uuid())
+  name                 String
+  email                String   @unique
+  phone                String?
+  address              String?
+  whatsappNumber       String   // For receiving orders
+  logoUrl              String?
+  subscriptionStatus   SubscriptionStatus @default(PENDING)
+  subscriptionStartDate DateTime?
+  subscriptionEndDate  DateTime?
+  monthlyFee           Float    @default(29.99)
+  passwordHash         String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  // Relations
+  tables               RestaurantTable[]
+  subscriptionPayments SubscriptionPayment[]
+  qrScans              QrScan[]
+
+  @@map("restaurants")
+}
+
+// Tables/QR codes table
+model RestaurantTable {
+  id           String   @id @default(uuid())
+  restaurantId String
+  tableNumber  String
+  tableName    String?  // Optional: "Window Table", "Patio Table 1", etc.
+  qrCodeUrl    String?  // Generated QR code image URL
+  qrCodeData   String   // The actual URL/data in the QR code
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  // Relations
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  qrScans      QrScan[]
+
+  @@unique([restaurantId, tableNumber])
+  @@map("restaurant_tables")
+}
+
+// Payment records for manual subscription tracking
+model SubscriptionPayment {
+  id               String   @id @default(uuid())
+  restaurantId     String
+  amount           Float
+  paymentMethod    String?  // 'bank_transfer', 'cash', 'mobile_money', etc.
+  paymentReference String?  // Transaction reference or receipt number
+  paymentDate      DateTime
+  periodStart      DateTime
+  periodEnd        DateTime
+  status           PaymentStatus @default(PENDING)
+  notes            String?
+  verifiedBy       String?  // Admin who verified the payment
+  verifiedAt       DateTime?
+  createdAt        DateTime @default(now())
+
+  // Relations
+  restaurant       Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@map("subscription_payments")
+}
+
+// QR scan tracking (optional - for analytics)
+model QrScan {
+  id            String   @id @default(uuid())
+  restaurantId  String
+  tableId       String?
+  scanTimestamp DateTime @default(now())
+  ipAddress     String?  // For basic analytics
+  userAgent     String?  // For device type analytics
+
+  // Relations
+  restaurant    Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  table         RestaurantTable? @relation(fields: [tableId], references: [id], onDelete: SetNull)
+
+  @@map("qr_scans")
+}
+
+// System admins table
+model Admin {
+  id           String   @id @default(uuid())
+  username     String   @unique
+  email        String   @unique
+  passwordHash String
+  role         AdminRole @default(ADMIN)
+  createdAt    DateTime @default(now())
+
+  @@map("admins")
+}
+
+// Enums
+enum SubscriptionStatus {
+  PENDING
+  ACTIVE
+  EXPIRED
+  CANCELLED
+
+  @@map("subscription_status")
+}
+
+enum PaymentStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+
+  @@map("payment_status")
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+
+  @@map("admin_role")
+}
