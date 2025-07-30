@@ -520,7 +520,7 @@ export type Database = {
           created_at: string | null
           currency: string | null
           display_order: number | null
-          email: string
+          email: string | null
           id: string
           is_active: boolean | null
           logo_url: string | null
@@ -530,7 +530,7 @@ export type Database = {
           monthly_fee: number | null
           name: string
           package_id: string | null
-          password_hash: string
+          password_hash: string | null
           phone: string | null
           plan: string | null
           slug: string | null
@@ -550,7 +550,7 @@ export type Database = {
           created_at?: string | null
           currency?: string | null
           display_order?: number | null
-          email: string
+          email?: string | null
           id?: string
           is_active?: boolean | null
           logo_url?: string | null
@@ -560,7 +560,7 @@ export type Database = {
           monthly_fee?: number | null
           name: string
           package_id?: string | null
-          password_hash: string
+          password_hash?: string | null
           phone?: string | null
           plan?: string | null
           slug?: string | null
@@ -580,7 +580,7 @@ export type Database = {
           created_at?: string | null
           currency?: string | null
           display_order?: number | null
-          email?: string
+          email?: string | null
           id?: string
           is_active?: boolean | null
           logo_url?: string | null
@@ -590,7 +590,7 @@ export type Database = {
           monthly_fee?: number | null
           name?: string
           package_id?: string | null
-          password_hash?: string
+          password_hash?: string | null
           phone?: string | null
           plan?: string | null
           slug?: string | null

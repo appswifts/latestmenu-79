@@ -81,6 +81,8 @@ const RestaurantsManagement = () => {
           slug,
           whatsapp_number: formData.whatsapp_number,
           address: formData.address,
+          email: `${slug}@${formData.name.toLowerCase().replace(/\s+/g, '')}.restaurant`,
+          password_hash: null,
           subscription_status: 'pending'
         })
         .select()
